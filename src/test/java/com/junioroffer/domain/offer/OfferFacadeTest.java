@@ -8,6 +8,7 @@ import java.util.List;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 
 class OfferFacadeTest {
@@ -38,21 +39,32 @@ class OfferFacadeTest {
     @Test
     public void should_return_offer_by_id() {
         // given
-        OfferDto offer1 = offerFacade.saveOffer(new OfferDto(null, "Si", "Java", "2000", "example.com"));
+        OfferDto offerToSave = new OfferDto(null, "Si", "Java", "2000", "example.com");
+        OfferDto savedOffer = offerFacade.saveOffer(offerToSave);
+        Long offerId = savedOffer.id();
         //when
-        OfferDto result = offerFacade.findOfferById(0L);
+        OfferDto result = offerFacade.findOfferById(offerId);
         //then
 
         assertThat(result.company()).isEqualTo("Si");
-        assertThat(result.id()).isEqualTo(0L);
+        assertThat(result.id()).isEqualTo(offerId);
 
+    }
+    @Test
+    public void should_return_error_message_when_offer_not_found(){
+        //given
+        //when
+        Throwable throwable = catchThrowable(() -> offerFacade.findOfferById(0L));
+        //then
+        assertThat(throwable).isInstanceOf(OfferNotFoundException.class);
+        assertThat(throwable.getMessage()).isEqualTo("Offer with this id: " + 0 + " not found");
     }
 
     @Test
     public void should_return_all_offer() {
         //given
-        OfferDto offer1 = offerFacade.saveOffer(new OfferDto(null, "Si", "Java", "2000", "example.com"));
-        OfferDto offer2 = offerFacade.saveOffer(new OfferDto(null, "Sis", "Javaas", "32000", "example2.com"));
+        offerFacade.saveOffer(new OfferDto(null, "Si", "Java", "2000", "example.com"));
+        offerFacade.saveOffer(new OfferDto(null, "Sis", "Javaas", "32000", "example2.com"));
         //when
         List<OfferDto> allOffers = offerFacade.findAllOffers();
         //then
