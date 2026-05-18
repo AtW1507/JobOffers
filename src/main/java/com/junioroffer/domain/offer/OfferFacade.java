@@ -4,14 +4,14 @@ import com.junioroffer.domain.offer.dto.OfferDto;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 
 @AllArgsConstructor
 class OfferFacade {
 
     private final OfferRepository offerRepository;
+    private final OfferFilter offerFilter;
 
     public OfferDto findOfferById(Long id) {
         return offerRepository.findOfferById(id)
@@ -41,20 +41,13 @@ public List<OfferDto> findAllOffers() {
 
 }
 
-public List<OfferDto> fetchAllOffersAndSaveAllIfNotExists() {
-    List<OfferDto> allOffers = findAllOffers();
-    List<OfferDto> offersToSave = filterOffersToSave(allOffers);
+public List<OfferDto> fetchAllOffersAndSaveAllIfNotExists(List<OfferDto> offers) {
+    List<OfferDto> offersToSave = offerFilter.filterOffersToSave(offers);
     List<Offer> offersEntity = offersToSave.stream().map(OfferMapper::mapFromOfferDtoToOffer).toList();
     List<Offer> savedAllOffers = offerRepository.saveAll(offersEntity);
     return savedAllOffers.stream().map(OfferMapper::mapFromOfferToOfferDto).toList();
 }
 
-private List<OfferDto> filterOffersToSave(List<OfferDto> offers) {
-    List<Offer> offersByDataBase = offerRepository.findAllOffer();
-    Set<String> existingIds = offersByDataBase.stream().map(Offer::offerUrl)
-            .collect(Collectors.toSet());
-    return offers.stream().filter(offerDto -> !existingIds.contains(offerDto.offerUrl()))
-            .collect(Collectors.toList());
-}
+
 
 }

@@ -3,6 +3,7 @@ package com.junioroffer.domain.offer;
 import com.junioroffer.domain.offer.dto.OfferDto;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -13,9 +14,10 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 class OfferFacadeTest {
 
+    InMemoryOfferRepositoryTestImpl repositoryTest = new InMemoryOfferRepositoryTestImpl();
 
     OfferFacade offerFacade = new OfferFacade(
-            new InMemoryOfferRepositoryTestImpl()
+            repositoryTest, new OfferFilter(repositoryTest)
     );
 
     @Test
@@ -74,4 +76,22 @@ class OfferFacadeTest {
 
 
     }
+    @Test
+    public void should_return_all_saved_offer_when_this_offer_not_have_in_dataBase(){
+        //given
+        offerFacade.saveOffer(new OfferDto(null, "Si", "Java", "2000", "example.com"));
+        offerFacade.saveOffer(new OfferDto(null, "Sis", "Javaas", "32000", "example2.com"));
+        List<OfferDto> newOffer = new ArrayList<>();
+        newOffer.add(new OfferDto(null,"Google","PHP","4000", "google.com"));
+        newOffer.add(new OfferDto(null,"Nowy","C++","5000", "nowy.com"));
+        newOffer.add(new OfferDto(null, "Sis", "Javaas", "32000", "example2.com"));
+        //when
+        List<OfferDto> offerSaved = offerFacade.fetchAllOffersAndSaveAllIfNotExists(newOffer);
+        List<OfferDto> allOffers = offerFacade.findAllOffers();
+        //then
+        assertThat(offerSaved.size()).isEqualTo(2);
+        assertThat(allOffers.size()).isEqualTo(4);
+        assertThat(allOffers.stream().map(OfferDto::company)).containsExactlyInAnyOrder("Si","Sis","Nowy","Google");
+    }
+
 }
