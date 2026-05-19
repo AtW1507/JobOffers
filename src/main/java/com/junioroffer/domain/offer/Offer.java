@@ -13,4 +13,5 @@ public record Offer(
         String salary,
         String offerUrl
 ) {
+
 }

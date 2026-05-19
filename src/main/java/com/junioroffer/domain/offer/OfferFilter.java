@@ -19,4 +19,5 @@ class OfferFilter {
         return offers.stream().filter(offerDto -> !existingUrl.contains(offerDto.offerUrl()))
                 .collect(Collectors.toList());
     }
+
 }

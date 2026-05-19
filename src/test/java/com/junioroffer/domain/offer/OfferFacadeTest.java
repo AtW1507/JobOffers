@@ -93,5 +93,16 @@ class OfferFacadeTest {
         assertThat(allOffers.size()).isEqualTo(4);
         assertThat(allOffers.stream().map(OfferDto::company)).containsExactlyInAnyOrder("Si","Sis","Nowy","Google");
     }
+    @Test
+    public void should_return_error_message_when_offer_has_empty_fields(){
+        //given
+        //when
+        Throwable throwable = catchThrowable(()->offerFacade.saveOffer(new OfferDto(null, " ", "Java", "", "example.com")));
+        //then
+        assertThat(throwable).isInstanceOf(OfferHasEmptyFields.class);
+        assertThat(throwable.getMessage()).isEqualTo("Offer has empty fields");
+
+
+    }
 
 }
