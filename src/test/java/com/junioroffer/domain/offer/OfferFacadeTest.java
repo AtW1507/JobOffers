@@ -16,9 +16,7 @@ class OfferFacadeTest {
 
     InMemoryOfferRepositoryTestImpl repositoryTest = new InMemoryOfferRepositoryTestImpl();
 
-    OfferFacade offerFacade = new OfferFacade(
-            repositoryTest, new OfferFilter(repositoryTest)
-    );
+    OfferFacade offerFacade = new OfferConfiguration().createForTest(repositoryTest);
 
     @Test
     public void should_return_offer_when_added_offer() {
