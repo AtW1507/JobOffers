@@ -1,5 +1,7 @@
 package com.junioroffer.domain.loginandregister;
 
+import com.junioroffer.domain.loginandregister.dto.RegisterUserDto;
+import com.junioroffer.domain.loginandregister.dto.RegistrationUserDto;
 import com.junioroffer.domain.loginandregister.dto.UserDto;
 import org.junit.jupiter.api.Test;
 
@@ -26,34 +28,30 @@ class LoginAndRegisterFacadeTest {
     @Test
     public void should_find_user_by_user_name() {
         //given
-        User user = User.builder()
-                .userName("Antek")
-                .password("12345")
-                .build();
-        userRepository.addUser(user);
+        RegisterUserDto user = new RegisterUserDto("Antek", "12345");
+        RegistrationUserDto register = loginAndRegisterFacade.register(user);
         //when
-        UserDto result = loginAndRegisterFacade.findUserByUserName(user.userName());
+        UserDto result = loginAndRegisterFacade.findUserByUserName(register.username());
         //then
         assertThat(result)
                 .isNotNull()
                 .extracting(UserDto::userName)
                 .isEqualTo("Antek");
+        assertThat(result.id()).isEqualTo(register.id());
     }
 
     @Test
     public void should_register_user() {
         //given
-        User user = User.builder()
+        RegisterUserDto user = RegisterUserDto.builder()
                 .userName("Antek")
                 .password("12345")
                 .build();
         //when
-        UserDto result = loginAndRegisterFacade.register(user);
+        RegistrationUserDto result = loginAndRegisterFacade.register(user);
         //then
-        assertThat(result)
-                .isNotNull()
-                .extracting(UserDto::userName)
-                .isEqualTo("Antek");
+        assertThat(result.created()).isTrue();
+        assertThat(result.username()).isEqualTo("Antek");
 
 
     }

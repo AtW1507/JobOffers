@@ -3,6 +3,7 @@ package com.junioroffer.domain.loginandregister;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -17,7 +18,13 @@ class UserRepositoryTestImpl implements UserRepository{
     }
 
     @Override
-    public User addUser(User user) {
+    public User addUser(User entity) {
+        UUID id = UUID.randomUUID();
+        User user = new User(
+                id.toString(),
+                entity.userName(),
+                entity.password()
+        );
         userList.put(user.userName(), user);
         return user;
     }
