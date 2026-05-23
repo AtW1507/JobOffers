@@ -1,6 +1,5 @@
 package com.junioroffer.domain.loginandregister;
 
-import com.junioroffer.domain.loginandregister.dto.UserDto;
 
 import java.util.Map;
 import java.util.Optional;
