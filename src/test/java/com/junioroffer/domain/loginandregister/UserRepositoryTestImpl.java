@@ -5,12 +5,12 @@ import com.junioroffer.domain.loginandregister.dto.UserDto;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
+
 
 class UserRepositoryTestImpl implements UserRepository{
 
     Map<String, User> userList = new ConcurrentHashMap<>();
-    AtomicInteger index = new AtomicInteger(0);
+
 
     @Override
     public Optional<User> findByUserName(final String userName) {
