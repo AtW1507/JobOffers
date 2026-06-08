@@ -1,4 +1,4 @@
-package com.junioroffer.domain.loginandregister;
+package com.junioroffer.domain.login;
 
 import java.util.Optional;
 
