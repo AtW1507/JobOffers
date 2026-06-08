@@ -1,10 +1,10 @@
-package com.junioroffer.domain;
+package com.junioroffer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-class JobOffersSpringBootApplication {
+public class JobOffersSpringBootApplication {
     public static void main(String[] args) {
         SpringApplication.run(JobOffersSpringBootApplication.class, args);
     }

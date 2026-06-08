@@ -1,4 +1,4 @@
-package com.junioroffer.domain.loginandregister.dto;
+package com.junioroffer.domain.login.dto;
 
 import lombok.Builder;
 
