@@ -1,8 +1,8 @@
 package com.junioroffer.domain.offer;
 
 class OfferConfiguration {
-    OfferFacade createForTest(OfferRepository repository){
-        OfferFilter offerFilter = new OfferFilter(repository);
-        return new OfferFacade(repository,offerFilter);
+    OfferFacade createForTest(OfferFetchable offerFetchable,OfferRepository repository){
+        OfferService offerService = new OfferService(offerFetchable, repository);
+        return new OfferFacade(repository,offerService);
     }
 }

@@ -3,13 +3,14 @@ package com.junioroffer.domain.offer;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
+
 
 
 class InMemoryOfferRepositoryTestImpl implements OfferRepository{
-    Map<Long, Offer> inMemoryDataBase = new ConcurrentHashMap<>();
-    AtomicInteger index = new AtomicInteger(0);
+    Map<String, Offer> inMemoryDataBase = new ConcurrentHashMap<>();
+
 
     @Override
     public List<Offer> findAllOffer() {
@@ -17,22 +18,25 @@ class InMemoryOfferRepositoryTestImpl implements OfferRepository{
     }
 
     @Override
-    public Offer save(Offer offer) {
-        long index = this.index.getAndIncrement();
-        Offer offerWithId = Offer.builder()
-                .id(index)
-                .company(offer.company())
-                .title(offer.title())
-                .salary(offer.salary())
-                .offerUrl(offer.offerUrl())
-                .build();
-        inMemoryDataBase.put(index, offerWithId);
+    public Offer save(Offer entity) {
+        if(inMemoryDataBase.values().stream().anyMatch(offer -> offer.offerUrl().equals(entity.offerUrl()))){
+            throw new OfferDuplicateException(entity.offerUrl());
+        }
+        UUID id = UUID.randomUUID();
+        Offer offer = new Offer(
+                id.toString(),
+                entity.companyName(),
+                entity.position(),
+                entity.salary(),
+                entity.offerUrl()
+                );
+        inMemoryDataBase.put(id.toString(), offer);
 
-        return offerWithId;
+        return offer;
     }
 
     @Override
-    public Optional<Offer> findOfferById(Long id) {
+    public Optional<Offer> findOfferById(String id) {
         return Optional.ofNullable(inMemoryDataBase.get(id));
     }
 
@@ -43,5 +47,14 @@ class InMemoryOfferRepositoryTestImpl implements OfferRepository{
                 .toList();
         }
 
+    @Override
+    public boolean existsByOfferUrl(final String offerUrl) {
+        long count = inMemoryDataBase.values()
+                .stream()
+                .filter(offer -> offer.offerUrl().equals(offerUrl))
+                .count();
+        return count == 1;
     }
+
+}
 
