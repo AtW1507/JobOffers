@@ -1,6 +1,6 @@
 package com.junioroffer.domain.offer.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Builder;
 
 import java.io.Serializable;

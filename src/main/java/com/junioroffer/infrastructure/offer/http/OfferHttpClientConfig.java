@@ -18,10 +18,10 @@ public class OfferHttpClientConfig {
     }
 
     @Bean
-    public RestTemplate restTemplate(RestTemplateResponseErrorHandler restTemplateResponseErrorHandler){
+    public RestTemplate restTemplate(RestTemplateResponseErrorHandler restTemplateResponseErrorHandler, OfferHttpClientRestTemplateConfigurationProperties properties){
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
-        requestFactory.setConnectTimeout(Duration.ofMillis(1000));
-        requestFactory.setReadTimeout(Duration.ofMillis(1000));
+        requestFactory.setConnectTimeout(Duration.ofMillis(properties.connectionTimeout()));
+        requestFactory.setReadTimeout(Duration.ofMillis(properties.readTimeout()));
 
         RestTemplate restTemplate = new RestTemplate(requestFactory);
         restTemplate.setErrorHandler(restTemplateResponseErrorHandler);
@@ -30,8 +30,7 @@ public class OfferHttpClientConfig {
 
     @Bean
     public OfferFetchable remoteFetcherOfferClient(RestTemplate restTemplate,
-                                                   @Value("${offer.fetcher-offer.http.client.config.uri}") String uri,
-                                                   @Value("${offer.fetcher-offer.http.client.config.port}") int port){
-        return new OfferHttpClient(restTemplate, uri, port);
+                                                  OfferHttpClientRestTemplateConfigurationProperties properties){
+        return new OfferHttpClient(restTemplate, properties.url(), properties.port());
     }
 }
