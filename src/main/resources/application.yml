@@ -1,4 +1,14 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://admin:admin@localhost:27018/job-offers-web
+      connection-string: mongodb://admin:admin@localhost:27018/job-offers-web
+
+offer:
+  fetcher-offer:
+    http:
+      client:
+        config:
+          connection-timeout: 1000
+          port: 5057
+          read-timeout: 1000
+          uri: http://ec2-18-194-181-208.eu-central-1.compute.amazonaws.com:5057

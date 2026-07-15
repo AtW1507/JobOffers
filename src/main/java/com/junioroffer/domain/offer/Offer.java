@@ -7,9 +7,9 @@ import lombok.Builder;
 
 @Builder
 public record Offer(
-        Long id,
-        String company,
-        String title,
+        String id,
+        String companyName,
+        String position,
         String salary,
         String offerUrl
 ) {
