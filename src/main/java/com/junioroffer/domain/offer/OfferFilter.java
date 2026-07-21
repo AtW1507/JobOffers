@@ -13,7 +13,7 @@ class OfferFilter {
     private final OfferRepository offerRepository;
 
     public List<OfferResponseDto> filterOffersToSave(List<OfferResponseDto> offers) {
-        List<Offer> offersByDataBase = offerRepository.findAllOffer();
+        List<Offer> offersByDataBase = offerRepository.findAll();
         Set<String> existingUrl = offersByDataBase.stream().map(Offer::offerUrl)
                 .collect(Collectors.toSet());
         return offers.stream().filter(offerDto -> !existingUrl.contains(offerDto.offerUrl()))

@@ -5,5 +5,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "offer.fetcher-offer.http.client.config")
 @Builder
-public record OfferHttpClientRestTemplateConfigurationProperties(long connectionTimeout,int port, long readTimeout, String url) {
+public record OfferHttpClientRestTemplateConfigurationProperties(long connectionTimeout,int port, long readTimeout, String uri) {
 }

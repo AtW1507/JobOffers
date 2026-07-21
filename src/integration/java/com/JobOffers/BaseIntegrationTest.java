@@ -44,7 +44,7 @@ public class BaseIntegrationTest {
     @Container
     @ServiceConnection
     public static final MongoDBContainer mongoDBContainer =
-            new MongoDBContainer(DockerImageName.parse("mongo:4.0.10"));
+            new MongoDBContainer(DockerImageName.parse("mongo:5.0.15"));
 
 
     @RegisterExtension

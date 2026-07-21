@@ -30,6 +30,6 @@ public class OfferHttpClientConfig {
     @Bean
     public OfferFetchable remoteFetcherOfferClient(RestTemplate restTemplate,
                                                   OfferHttpClientRestTemplateConfigurationProperties properties){
-        return new OfferHttpClient(restTemplate, properties.url(), properties.port());
+        return new OfferHttpClient(restTemplate, properties.uri(), properties.port());
     }
 }

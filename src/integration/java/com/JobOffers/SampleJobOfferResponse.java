@@ -1,4 +1,4 @@
-package com.JobOffers.feature;
+package com.JobOffers;
 
 public interface SampleJobOfferResponse {
 

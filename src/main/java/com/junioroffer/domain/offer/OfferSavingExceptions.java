@@ -4,7 +4,7 @@ import lombok.Getter;
 
 import java.util.List;
 @Getter
-class OfferSavingExceptions extends RuntimeException {
+public class OfferSavingExceptions extends RuntimeException {
 
     private final List<String> offerUrls;
 

@@ -1,0 +1,7 @@
+offer:
+  fetcher-offer:
+    scheduler:
+      delay: PT1s
+
+scheduling:
+  enabled: false
