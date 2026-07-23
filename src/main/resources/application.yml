@@ -1,7 +1,8 @@
 spring:
   data:
     mongodb:
-      connection-string: mongodb://admin:admin@localhost:27018/job-offers-web
+      uri: mongodb://admin:admin@localhost:27017/offers
+
 
 offer:
   fetcher-offer:
