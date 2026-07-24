@@ -1,7 +1,6 @@
 spring:
-  data:
-    mongodb:
-      uri: mongodb://admin:admin@localhost:27017/offers
+  mongodb:
+    uri: mongodb://admin:admin@localhost:27017/offers?authSource=admin
 
 
 offer:

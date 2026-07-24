@@ -5,3 +5,8 @@ offer:
 
 scheduling:
   enabled: false
+spring:
+  jackson:
+    datatype:
+      enum:
+        write-enums-using-to-string: false
