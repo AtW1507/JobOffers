@@ -1,0 +1,61 @@
+package com.JobOffers.controller.error;
+
+import com.JobOffers.BaseIntegrationTest;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.web.servlet.ResultActions;
+import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.utility.DockerImageName;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+public class OfferUrlDuplicateErrorIntegrationTest extends BaseIntegrationTest {
+
+    @Container
+    public static final MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:5.0.15"));
+
+    @DynamicPropertySource
+    public static void propertyOverride(DynamicPropertyRegistry registry){
+        registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
+    }
+
+    @Test
+    public void should_return_409_conflict_when_added_second_offer_with_same_offer_url() throws Exception {
+        // step 1:
+        //given && when
+        ResultActions perform = mockMvc.perform(post("/offers")
+                .content("""
+                        {
+                        "title": "Junior Java Developer",
+                        "companyName": "Connectis_",
+                        "salary": "14 000 – 17 000 PLN",
+                        "offerUrl": "https://nofluffjobs.com/pl/job/junior-java-developer-connectis--warszawa",
+                        "position": "Junior"
+                        }
+                        """)
+                .contentType(MediaType.APPLICATION_JSON_VALUE + ";charset-UTF-8")
+        );
+        //then
+        perform.andExpect(status().isCreated());
+
+        // step 2:
+        //given && when
+        ResultActions perform1 = mockMvc.perform(post("/offers")
+                .content("""
+                        {
+                        "title": "Junior Java Developer",
+                        "companyName": "Connectis_",
+                        "salary": "14 000 – 17 000 PLN",
+                        "offerUrl": "https://nofluffjobs.com/pl/job/junior-java-developer-connectis--warszawa",
+                        "position": "Junior"
+                        }
+                        """)
+                .contentType(MediaType.APPLICATION_JSON_VALUE + ";charset-UTF-8"));
+        //then
+        perform1.andExpect(status().isConflict());
+    }
+}
