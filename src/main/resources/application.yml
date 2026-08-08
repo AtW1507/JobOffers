@@ -2,6 +2,9 @@ spring:
   mongodb:
     uri: mongodb://admin:admin@localhost:27017/offers?authSource=admin
 
+  data:
+    mongodb:
+      auto-index-creation: true
 
 offer:
   fetcher-offer:

@@ -11,7 +11,7 @@ public interface SampleJobOfferResponse {
                 [
                   {
                     "title": "Junior Java Developer",
-                    "company": "Connectis_",
+                    "companyName": "Connectis_",
                     "salary": "14 000 – 17 000 PLN",
                     "offerUrl": "https://nofluffjobs.com/pl/job/junior-java-developer-connectis--warszawa",
                     "source": "nofluffjobs",
@@ -19,7 +19,7 @@ public interface SampleJobOfferResponse {
                   },
                   {
                     "title": "Junior Java Developer (f/m)",
-                    "company": "Netcompany Poland",
+                    "companyName": "Netcompany Poland",
                     "salary": "8 000 – 9 000 PLN",
                     "offerUrl": "https://nofluffjobs.com/pl/job/junior-java-developer-f-m-netcompany-poland-warsaw",
                     "source": "nofluffjobs",
@@ -33,7 +33,7 @@ public interface SampleJobOfferResponse {
                 [
                 {
                     "title": "Junior Java Developer",
-                    "company": "Connectis_",
+                    "companyName": "Connectis_",
                     "salary": "14 000 – 17 000 PLN",
                     "offerUrl": "https://nofluffjobs.com/pl/job/junior-java-developer-connectis--warszawa",
                     "source": "nofluffjobs",
@@ -47,7 +47,7 @@ public interface SampleJobOfferResponse {
                 [
                 {
                     "title": "Junior Java Developer",
-                    "company": "Connectis_",
+                    "companyName": "Connectis_",
                     "salary": "14 000 – 17 000 PLN",
                     "offerUrl": "https://nofluffjobs.com/pl/job/junior-java-developer-connectis--warszawa",
                     "source": "nofluffjobs",
@@ -55,7 +55,7 @@ public interface SampleJobOfferResponse {
                   },
                   {
                     "title": "Junior Java Developer (f/m)",
-                    "company": "Netcompany Poland",
+                    "companyName": "Netcompany Poland",
                     "salary": "8 000 – 9 000 PLN",
                     "offerUrl": "https://nofluffjobs.com/pl/job/junior-java-developer-f-m-netcompany-poland-warsaw",
                     "source": "nofluffjobs",
@@ -63,7 +63,7 @@ public interface SampleJobOfferResponse {
                   },
                   {
                     "title": "Junior Backend Developer",
-                    "company": "Kalamba Games",
+                    "companyName": "Kalamba Games",
                     "salary": "6 000 – 10 000 PLN",
                     "offerUrl": "https://nofluffjobs.com/pl/job/junior-backend-developer-kalamba-games-krakow",
                     "source": "nofluffjobs",
@@ -71,7 +71,7 @@ public interface SampleJobOfferResponse {
                   },
                   {
                     "title": "(Not just a) Junior Software Engineer",
-                    "company": "u2i",
+                    "companyName": "u2i",
                     "salary": "9 000 – 11 500 PLN",
                     "offerUrl": "https://nofluffjobs.com/pl/job/not-just-a-junior-software-engineer-u2i-krakow",
                     "source": "nofluffjobs",
