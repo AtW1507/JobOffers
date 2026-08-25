@@ -19,3 +19,8 @@ offer:
           uri: http://ec2-18-194-181-208.eu-central-1.compute.amazonaws.com
 scheduling:
   enabled: true
+auth:
+  jwt:
+    secret: ${JWT_SECRET:asjndbaksbdaubdasndjknakjbdkauewkbfdkjsabdkjansdnawdnaskjabfsdvjnsrinfdnsbkfb3y3298534u09utjn3uyt374h4brknfw48thon}
+    issuer: job-offers-backend
+    expiration-days: 30

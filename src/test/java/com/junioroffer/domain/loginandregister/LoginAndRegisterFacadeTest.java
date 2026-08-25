@@ -1,9 +1,10 @@
-package com.junioroffer.domain.login;
+package com.junioroffer.domain.loginandregister;
 
-import com.junioroffer.domain.login.dto.RegisterUserDto;
-import com.junioroffer.domain.login.dto.RegistrationUserDto;
-import com.junioroffer.domain.login.dto.UserDto;
+import com.junioroffer.domain.loginandregister.dto.RegisterUserDto;
+import com.junioroffer.domain.loginandregister.dto.RegistrationResultDto;
+import com.junioroffer.domain.loginandregister.dto.UserDto;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.authentication.BadCredentialsException;
 
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class LoginAndRegisterFacadeTest {
 
-    UserRepositoryTestImpl userRepository = new UserRepositoryTestImpl();
+    LoginRepositoryTestImpl userRepository = new LoginRepositoryTestImpl();
     LoginAndRegisterFacade loginAndRegisterFacade = new LoginAndRegisterFacade(userRepository);
 
     @Test
@@ -21,17 +22,17 @@ class LoginAndRegisterFacadeTest {
         //when
         Throwable throwable = catchThrowable(() -> loginAndRegisterFacade.findUserByUserName(userName));
         //then
-        assertThat(throwable).isInstanceOf(UserNotFoundException.class);
-        assertThat(throwable.getMessage()).isEqualTo("User with username: " + userName + " not found");
+        assertThat(throwable).isInstanceOf(BadCredentialsException.class);
+        assertThat(throwable.getMessage()).isEqualTo("User not found");
     }
 
     @Test
     public void should_find_user_by_user_name() {
         //given
         RegisterUserDto user = new RegisterUserDto("Antek", "12345");
-        RegistrationUserDto register = loginAndRegisterFacade.register(user);
+        RegistrationResultDto register = loginAndRegisterFacade.register(user);
         //when
-        UserDto result = loginAndRegisterFacade.findUserByUserName(register.username());
+        UserDto result = loginAndRegisterFacade.findUserByUserName(register.userName());
         //then
         assertThat(result)
                 .isNotNull()
@@ -48,10 +49,10 @@ class LoginAndRegisterFacadeTest {
                 .password("12345")
                 .build();
         //when
-        RegistrationUserDto result = loginAndRegisterFacade.register(user);
+        RegistrationResultDto result = loginAndRegisterFacade.register(user);
         //then
         assertThat(result.created()).isTrue();
-        assertThat(result.username()).isEqualTo("Antek");
+        assertThat(result.userName()).isEqualTo("Antek");
 
 
     }

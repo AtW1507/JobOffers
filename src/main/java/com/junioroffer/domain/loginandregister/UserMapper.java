@@ -1,7 +1,7 @@
-package com.junioroffer.domain.login;
+package com.junioroffer.domain.loginandregister;
 
-import com.junioroffer.domain.login.dto.RegisterUserDto;
-import com.junioroffer.domain.login.dto.UserDto;
+import com.junioroffer.domain.loginandregister.dto.RegisterUserDto;
+import com.junioroffer.domain.loginandregister.dto.UserDto;
 
 class UserMapper {
 
