@@ -10,3 +10,7 @@ spring:
     datatype:
       enum:
         write-enums-using-to-string: false
+
+logging:
+  level:
+    org.springframework.security: TRACE

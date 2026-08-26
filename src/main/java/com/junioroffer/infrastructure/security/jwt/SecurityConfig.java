@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 
 @Configuration
 @AllArgsConstructor
@@ -22,22 +24,30 @@ public class SecurityConfig {
     private final JwtAuthTokenFilter jwtAuthTokenFilter;
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration){
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public UserDetailsService userDetailsService(LoginAndRegisterFacade loginAndRegisterFacade){
+    public SecurityContextRepository securityContextRepository() {
+        return new RequestAttributeSecurityContextRepository();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(LoginAndRegisterFacade loginAndRegisterFacade) {
         return new LoginUserDetailsService(loginAndRegisterFacade);
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return     httpSecurity.csrf(AbstractHttpConfigurer::disable)
+        return httpSecurity.csrf(AbstractHttpConfigurer::disable)
+                .securityContext(securityContext -> securityContext
+                        .securityContextRepository(new RequestAttributeSecurityContextRepository()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()

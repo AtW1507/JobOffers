@@ -24,3 +24,6 @@ auth:
     secret: ${JWT_SECRET:asjndbaksbdaubdasndjknakjbdkauewkbfdkjsabdkjansdnawdnaskjabfsdvjnsrinfdnsbkfb3y3298534u09utjn3uyt374h4brknfw48thon}
     issuer: job-offers-backend
     expiration-days: 30
+logging:
+  level:
+    org.springframework.security: TRACE

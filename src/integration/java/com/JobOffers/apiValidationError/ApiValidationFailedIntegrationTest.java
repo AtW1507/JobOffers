@@ -4,18 +4,25 @@ import com.JobOffers.BaseIntegrationTest;
 import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class ApiValidationFailedIntegrationTest extends BaseIntegrationTest {
 
+
     @Test
+    @WithMockUser
     public void should_return_400_bad_request_and_validation_message_when_request_has_empty_offer() throws Exception {
         //given
         //when
@@ -25,10 +32,10 @@ class ApiValidationFailedIntegrationTest extends BaseIntegrationTest {
                                 {
                                     "companyName": "",
                                     "salary": "",
-                                    "position": ""
+                                    "position": ""                                    
                                 }
                                 """.trim())
-                .contentType(MediaType.APPLICATION_JSON + ";charset-UTF-8"));
+                .contentType(MediaType.APPLICATION_JSON));
         //then
         MvcResult mvcResult = perform.andExpect(status().isBadRequest()).andReturn();
         String json = mvcResult.getResponse().getContentAsString();
