@@ -273,7 +273,7 @@ class TypicalScenarioUserWantToSeeOffersIntegrationTest extends BaseIntegrationT
                                     "position" : "Junior"
                                 }
                                 """.trim()
-                ).contentType(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+                ).contentType(MediaType.APPLICATION_JSON)
         );
         //then
         MvcResult mvcResultForPostOffers = performResultWithPostOffer.andExpect(status().isCreated()).andReturn();
@@ -286,6 +286,7 @@ class TypicalScenarioUserWantToSeeOffersIntegrationTest extends BaseIntegrationT
                 () -> assertThat(offerResponseDto.offerUrl()).isEqualTo("https://nofluffjobs.com/pl/job/junior-java-developer-connectis--warszawa2"),
                 () -> assertThat(offerResponseDto.companyName()).isEqualTo("Connectis_"),
                 () -> assertThat(offerResponseDto.salary()).isEqualTo("14 000 – 17 000 PLN"),
+                () -> assertThat(offerResponseDto.position()).isEqualTo("Junior"),
                 () -> assertThat(id).isNotNull()
         );
 

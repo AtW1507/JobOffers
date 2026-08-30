@@ -3,8 +3,16 @@ spring:
     uri: mongodb://admin:admin@localhost:27017/offers?authSource=admin
 
   data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
     mongodb:
       auto-index-creation: true
+  cache:
+    type: redis
+    redis:
+      time-to-live: PT60M
+
 
 offer:
   fetcher-offer:
@@ -21,7 +29,7 @@ scheduling:
   enabled: true
 auth:
   jwt:
-    secret: ${JWT_SECRET:asjndbaksbdaubdasndjknakjbdkauewkbfdkjsabdkjansdnawdnaskjabfsdvjnsrinfdnsbkfb3y3298534u09utjn3uyt374h4brknfw48thon}
+    secret: ${JWT_SECRET}
     issuer: job-offers-backend
     expiration-days: 30
 logging:
