@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableConfigurationProperties({OfferHttpClientRestTemplateConfigurationProperties.class, JwtConfigurationProperties.class})
 @EnableMongoRepositories
-@EnableScheduling
+//@EnableScheduling
 public class JobOffersSpringBootApplication {
     public static void main(String[] args) {
         SpringApplication.run(JobOffersSpringBootApplication.class, args);
