@@ -3,6 +3,7 @@ package com.JobOffers;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import com.junioroffer.JobOffersSpringBootApplication;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,6 +14,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -20,6 +23,7 @@ import org.testcontainers.utility.DockerImageName;
 import tools.jackson.databind.ObjectMapper;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 @SpringBootTest(classes = JobOffersSpringBootApplication.class)
 @ActiveProfiles("integration")
@@ -35,7 +39,16 @@ public class BaseIntegrationTest {
     public static final String WIRE_MOCK_HOST = "http://localhost";
 
     @Autowired
+    private WebApplicationContext webApplicationContext;
+
     public MockMvc mockMvc;
+
+    @BeforeEach
+    void setUpMockMvc(){
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                .apply(springSecurity())
+                .build();
+    }
 
     @Autowired
     public ObjectMapper objectMapper;
@@ -57,5 +70,6 @@ public class BaseIntegrationTest {
     public static void propertyOverride(DynamicPropertyRegistry registry) {
         registry.add("offer.fetcher-offer.http.client.config.port", () -> wireMockServer.getPort());
         registry.add("offer.fetcher-offer.http.client.config.uri", () -> WIRE_MOCK_HOST);
+        registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
     }
 }
